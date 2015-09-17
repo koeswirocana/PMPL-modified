@@ -15,6 +15,7 @@ class HomePageTest(TestCase):
 	def test_home_page_returns_correct_html(self):
 		request = HttpRequest()
 		response = home_page(request)
+<<<<<<< HEAD
 		expected_html = render_to_string('home.html',
 		{
 			'comments': 'yey, waktunya berlibur'
@@ -106,3 +107,10 @@ class ItemModelTest(TestCase):
 		second_saved_item = saved_items[1]
 		self.assertEqual(first_saved_item.text, 'The first (ever) list item')
 		self.assertEqual(second_saved_item.text, 'Item the second')
+=======
+		self.assertTrue(response.content.startswith(b'<html>'))
+		self.assertIn(b'<title>Testing Site</title>', response.content)
+		self.assertIn(b'<head>koeswirocana site is here<br></head>', response.content)
+		self.assertIn(b'<body>Nama: I Wayan Kuswirocana<br>NPM: 1206208510</body>', response.content)
+		self.assertTrue(response.content.endswith(b'</html>'))
+>>>>>>> 570d05fdaa9eaa99579689008602ff15b5b6e5e0
