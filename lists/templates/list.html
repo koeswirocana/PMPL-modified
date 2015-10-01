@@ -9,7 +9,7 @@
 			{% csrf_token %}
 		</form>
 
-		<h3>{{ comments }}</h3>
+		<h3>{{ comment }}</h3>
 
 		<table id="id_list_table">
 			{% for item in list.item_set.all %}

@@ -15,32 +15,36 @@ class HomePageTest(TestCase):
 	def test_home_page_returns_correct_html(self):
 		request = HttpRequest()
 		response = home_page(request)
-		expected_html = render_to_string('home.html',
-		{
-			'comments': 'yey, waktunya berlibur'
-		})
+		expected_html = render_to_string('home.html')
+		# expected_html = render_to_string('home.html',
+		# {
+		#	'comments': 'yey, waktunya berlibur'
+		# })
 		self.assertEqual(response.content.decode(), expected_html)
 
-	def test_home_page_displays_comment_for_empty_items(self):
-		request = HttpRequest()
-		response = home_page(request)
+	#def test_list_page_displays_comment_for_empty_items(self):
+		# list_ = List.objects.create()
+		# request = HttpRequest()
+		# response = home_page(request)
+		# response = self.client.get('/lists/%d/' % (list_.id,))
 
-		self.assertEqual(Item.objects.count(), 0)
-		self.assertIn('yey, waktunya berlibur', response.content.decode())
+		# self.assertEqual(Item.objects.filter(list_id=list_.id).count(), 0)
+		# self.assertIn('yey, waktunya berlibur', response.content.decode())
 
-	def test_home_page_displays_comment_for_less_than_five_items(self):
+	def test_list_page_displays_comment_for_less_than_five_items(self):
 		list_ = List.objects.create()
 		Item.objects.create(text='itemey 1', list=list_)
-		Item.objects.create(text='itemey 2', list=list_)
+		# Item.objects.create(text='itemey 2', list=list_)
 
-		request = HttpRequest()
-		response = home_page(request)
+		# request = HttpRequest()
+		# response = home_page(request)
+		response = self.client.get('/lists/%d/' % (list_.id,))
 
-		self.assertGreater(Item.objects.count(), 0)
-		self.assertLess(Item.objects.count(), 5)
+		self.assertGreater(Item.objects.filter(list_id=list_.id).count(), 0)
+		self.assertLess(Item.objects.filter(list_id=list_.id).count(), 5)
 		self.assertIn('sibuk tapi santai', response.content.decode())
 
-	def test_home_page_displays_comment_for_more_than_five_items(self):
+	def test_list_page_displays_comment_for_more_than_five_items(self):
 		list_ = List.objects.create()
 		Item.objects.create(text='itemey 1', list=list_)
 		Item.objects.create(text='itemey 2', list=list_)
@@ -48,10 +52,11 @@ class HomePageTest(TestCase):
 		Item.objects.create(text='itemey 4', list=list_)
 		Item.objects.create(text='itemey 5', list=list_)
 
-		request = HttpRequest()
-		response = home_page(request)
+		# request = HttpRequest()
+		# response = home_page(request)
+		response = self.client.get('/lists/%d/' % (list_.id,))
 
-		self.assertGreaterEqual(Item.objects.count(), 5)
+		self.assertGreaterEqual(Item.objects.filter(list_id=list_.id).count(), 5)
 		self.assertIn('oh tidak', response.content.decode())
 
 class NewListTest(TestCase):
