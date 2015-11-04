@@ -118,7 +118,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 		self.assertAlmostEqual(
 			inputbox.location['x'] + inputbox.size['width'] / 2,
 			512,
-			delta=3
+			delta=30
 		)
 
 		# She starts a new list and sees the input is nicely
@@ -127,6 +127,6 @@ class NewVisitorTest(StaticLiveServerTestCase):
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		self.assertAlmostEqual(
 			inputbox.location['x'] + inputbox.size['width'] / 2,
-			490,
-			delta=3
+			512,
+			delta=30
 		)
